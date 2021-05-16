@@ -1,56 +1,55 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
+import {v1} from "uuid";
 
 export type filterCase = 'all' | 'active' | 'completed';
 
 export type TaskType = {
-    id: number;
+    id: string;
     title: string;
     isDone: boolean;
 }
 
 const App = () => {
-    debugger
     let [tasks, setTasks] = useState<TaskType[]>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'ReactTS', isDone: false},
-        {id: 4, title: 'Rest API', isDone: false},
-        {id: 5, title: 'GraphQL', isDone: false},
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'ReactTS', isDone: false},
+        {id: v1(), title: 'Rest API', isDone: false},
+        {id: v1(), title: 'GraphQL', isDone: false},
     ])
-    debugger
-    const removeTask = (selectID: number) =>{
-        debugger
+
+    const removeTask = (selectID: string) => {
         let filteredTasks = tasks.filter(t => t.id !== selectID);
-        debugger
         setTasks(filteredTasks);
     }
-    debugger
+
     let [filter, setFilter] = useState<filterCase>('all')
-    debugger
     let tasksForTodoList = tasks
-    debugger
-    if(filter === 'active'){
-        debugger
+    if (filter === 'active') {
         tasksForTodoList = tasks.filter(t => !t.isDone)
-    }else if(filter === 'completed'){
-        debugger
+    } else if (filter === 'completed') {
         tasksForTodoList = tasks.filter(t => t.isDone)
     }
-    debugger
-   const tasksFilter = (value: filterCase) => {
-        debugger
+    const tasksFilter = (value: filterCase) => {
         setFilter(value)
-   }
+    }
+
+    const addTask = (title: string) => {
+        const newTask = {id: v1(), title, isDone: false}
+        const newDataTasks = [newTask, ...tasks]
+        setTasks(newDataTasks)
+    }
 
     return (
         <div className="App">
             <Todolist
                 title='What to learn'
                 tasks={tasksForTodoList}
-               removeTasks={removeTask}
+                removeTasks={removeTask}
                 tasksFilter={tasksFilter}
+                addTask={addTask}
             />
         </div>
     );
