@@ -3,7 +3,7 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 
-export type filterCase = 'all' | 'active' | 'completed';
+export type FilterCase = 'all' | 'active' | 'completed';
 
 export type TaskType = {
     id: string;
@@ -25,21 +25,29 @@ const App = () => {
         setTasks(filteredTasks);
     }
 
-    let [filter, setFilter] = useState<filterCase>('all')
+    let [filter, setFilter] = useState<FilterCase>('all')
     let tasksForTodoList = tasks
     if (filter === 'active') {
         tasksForTodoList = tasks.filter(t => !t.isDone)
     } else if (filter === 'completed') {
         tasksForTodoList = tasks.filter(t => t.isDone)
     }
-    const tasksFilter = (value: filterCase) => {
+    const tasksFilter = (value: FilterCase) => {
         setFilter(value)
     }
 
     const addTask = (title: string) => {
-        const newTask = {id: v1(), title, isDone: false}
+        const newTask: TaskType = {id: v1(), title, isDone: false}
         const newDataTasks = [newTask, ...tasks]
         setTasks(newDataTasks)
+    }
+
+    const changeStatus = (id: string, isDoneStatus: boolean) => {
+        const task = tasks.find(t => t.id === id)
+        if (task) {
+            task.isDone = isDoneStatus
+        }
+        setTasks([...tasks])
     }
 
     return (
@@ -50,6 +58,8 @@ const App = () => {
                 removeTasks={removeTask}
                 tasksFilter={tasksFilter}
                 addTask={addTask}
+                changeStatus={changeStatus}
+                filter={filter}
             />
         </div>
     );
