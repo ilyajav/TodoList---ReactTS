@@ -6,3 +6,15 @@
 .App > div {
   margin-right: 50px;
 }
+
+.active{
+  color: cornflowerblue;
+}
+
+.error{
+   border-color: red;
+}
+
+.error-text{
+  color: red;
+}
