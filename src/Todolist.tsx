@@ -4,47 +4,48 @@ import {FilterCase, TaskType} from "./App";
 type PropsType = {
     title: string;
     tasks: TaskType[];
-    removeTasks: (selectID: string) => void;
-    tasksFilter: (value: FilterCase) => void;
-    addTask: (title: string) => void;
-    changeStatus: (id: string, isDoneStatus: boolean) => void;
+    removeTasks: (selectID: string, todoListID: string) => void;
+    tasksFilter: (value: FilterCase, todoListID: string) => void;
+    addTask: (title: string, todoListID: string) => void;
+    changeStatus: (id: string, isDoneStatus: boolean, todoListID: string) => void;
     filter: FilterCase;
+    id: string;
+    removeTodoList: (todoListID: string) => void
 }
 
 export const Todolist: FC<PropsType> = ({title, tasks, removeTasks, tasksFilter, ...props}) => {
     const [newTitleTask, setNewTitleTask] = useState<string>('')
     const [error, setError] = useState<boolean>(false)
 
-    const onTasksAllFilter = () => {
-        tasksFilter('all')
-    }
-    const onTasksActiveFilter = () => {
-        tasksFilter('active')
-    }
-    const onTasksCompletedFilter = () => {
-        tasksFilter('completed')
-    }
+    const onTasksAllFilter = () => tasksFilter('all', props.id)
+    const onTasksActiveFilter = () => tasksFilter('active', props.id)
+    const onTasksCompletedFilter = () => tasksFilter('completed', props.id)
+    const deleteTodoList = () => props.removeTodoList(props.id)
+
     const onTaskTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTitleTask(e.currentTarget.value)
         setError(false)
     }
+
     const onButtonClick = () => {
         if (newTitleTask.trim() !== '') {
-            props.addTask(newTitleTask.trim());
+            props.addTask(newTitleTask.trim(), props.id);
             setNewTitleTask('');
         } else {
             setError(true)
         }
     }
+
     const onEnterClick = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onButtonClick()
         }
     }
 
+
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>{title} <button onClick={deleteTodoList}>x</button></h3>
             <div>
                 <input value={newTitleTask} onChange={onTaskTitleChange}
                        onKeyPress={onEnterClick} className={error ? 'error' : ''}/>
@@ -56,14 +57,14 @@ export const Todolist: FC<PropsType> = ({title, tasks, removeTasks, tasksFilter,
                 {
                     tasks.map(task => {
                         const onRemoveTasks = () => {
-                            removeTasks(task.id)
+                            removeTasks(task.id, props.id)
                         };
                         const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-                            props.changeStatus(task.id, e.currentTarget.checked)
+                            props.changeStatus(task.id, e.currentTarget.checked, props.id)
                         }
                         return <li key={task.id}>
                             <input type="checkbox" checked={task.isDone} onChange={onChangeStatus}/>
-                            <span>{task.title}</span>
+                            <span className={task.isDone ? 'check-isDone' : ''}>{task.title}</span>
                             <button onClick={onRemoveTasks}>X</button>
                         </li>
                     })
