@@ -1,24 +1,21 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from "react";
+import {IconButton, TextField} from "@material-ui/core";
+import {ControlPoint} from "@material-ui/icons";
 
 type AddItemsPropsType = {
     addItem: (title: string) => void
 }
 
-export const AddItems: FC<AddItemsPropsType> = ({addItem}) =>{
-    const [newTitleTask, setNewTitleTask] = useState<string>('')
-    const [error, setError] = useState<boolean>(false)
+export const AddItems: FC<AddItemsPropsType> = ({addItem}) => {
+    const [newTitleItem, setNewTitleItem] = useState<string>('')
+    const [error, setError] = useState<string>('')
 
-    debugger
     const onButtonClick = () => {
-        debugger
-        if (newTitleTask.trim() !== '') {
-            debugger
-            addItem(newTitleTask.trim());
-            debugger
-            setNewTitleTask('');
+        if (newTitleItem.trim() !== '') {
+            addItem(newTitleItem.trim());
+            setNewTitleItem('');
         } else {
-            debugger
-            setError(true)
+            setError('Title is required')
         }
     }
 
@@ -28,17 +25,23 @@ export const AddItems: FC<AddItemsPropsType> = ({addItem}) =>{
         }
     }
 
-    const onTaskTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTitleTask(e.currentTarget.value)
-        setError(false)
+    const onTodoListTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewTitleItem(e.currentTarget.value)
+        setError('')
     }
 
-    return(
+    return (
         <div>
-            <input value={newTitleTask} onChange={onTaskTitleChange}
-                   onKeyPress={onEnterClick} className={error ? 'error' : ''}/>
-            <button onClick={onButtonClick}>+</button>
-            {error && <div className={'error-text'}>Field is required</div>}
+            <TextField
+                label='Type-value'
+                value={newTitleItem} onChange={onTodoListTitleChange}
+                variant={'outlined'}
+                helperText={error}
+                error={!!error}
+                onKeyPress={onEnterClick} className={error ? 'error' : ''}/>
+            <IconButton onClick={onButtonClick} color={"primary"}>
+                <ControlPoint/>
+            </IconButton>
         </div>
     )
 }
