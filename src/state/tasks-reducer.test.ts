@@ -1,6 +1,6 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer';
+import {addTasks, changeTaskStatus, changeTasksTitle, removeTasks, tasksReducer} from './tasks-reducer';
 import {TasksStateType} from '../App';
-import {addTodoListAC} from "./todolists-reducer";
+import {addTodoLists} from "./todolists-reducer";
 
 let startState: TasksStateType
 
@@ -21,7 +21,7 @@ beforeEach(()=>{
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTaskAC("2", "todolistId2");
+    const action = removeTasks("2", "todolistId2");
 
     const endState = tasksReducer(startState, action)
 
@@ -42,7 +42,7 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const action = addTaskAC("juice", "todolistId2");
+    const action = addTasks("juice", "todolistId2");
 
     const endState = tasksReducer(startState, action)
 
@@ -56,7 +56,7 @@ test('correct task should be added to correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC("2", "todolistId2", false);
+    const action = changeTaskStatus("2", "todolistId2", false);
 
     const endState = tasksReducer(startState, action)
 
@@ -67,7 +67,7 @@ test('status of specified task should be changed', () => {
 
 test('title of specified task should be changed', () => {
 
-    const action = changeTaskTitleAC("1", "todolistId1", 'Cars');
+    const action = changeTasksTitle("1", "todolistId1", 'Cars');
 
     const endState = tasksReducer(startState, action)
 
@@ -77,7 +77,7 @@ test('title of specified task should be changed', () => {
 
 test('new property with new array should be added when new todolist is added', () => {
 
-    const action = addTodoListAC("new todolist");
+    const action = addTodoLists("new todolist");
 
     const endState = tasksReducer(startState, action)
 
@@ -91,6 +91,3 @@ test('new property with new array should be added when new todolist is added', (
     expect(keys.length).toBe(3);
     expect(endState[newKey]).toEqual([]);
 });
-
-
-

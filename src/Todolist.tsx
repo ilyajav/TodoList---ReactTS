@@ -16,23 +16,24 @@ type TodolistPropsType = {
     id: string;
     removeTodoList: (todoListID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void;
-    changeTodoListTile: (newTitle: string, todoListID: string) => void;
+    changeTodoListTitle: (newTitle: string, todoListID: string) => void;
 }
 
 export const Todolist: FC<TodolistPropsType> = ({title, tasks, removeTasks, tasksFilter, ...props}) => {
 
+
     const onTasksAllFilter = () => tasksFilter('all', props.id)
     const onTasksActiveFilter = () => tasksFilter('active', props.id)
     const onTasksCompletedFilter = () => tasksFilter('completed', props.id)
-    const deleteTodoList = () => props.removeTodoList(props.id)
+    const removeTodoList = () => props.removeTodoList(props.id)
     const addTask = (title: string) => props.addTask(title, props.id)
-    const changeTodoListName = (newTitle: string) => props.changeTodoListTile(newTitle, props.id)
+    const changeTodoListName = (newTitle: string) => props.changeTodoListTitle(newTitle, props.id)
 
 
     return (
         <div>
             <h3><EditableSpan title={title} changeTitle={changeTodoListName}/>
-                <IconButton onClick={deleteTodoList}>
+                <IconButton onClick={removeTodoList}>
                     <Delete/>
                 </IconButton></h3>
             <AddItems addItem={addTask}/>
