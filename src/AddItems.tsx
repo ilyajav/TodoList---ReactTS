@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 
@@ -6,7 +6,8 @@ type AddItemsPropsType = {
     addItem: (title: string) => void
 }
 
-export const AddItems: FC<AddItemsPropsType> = ({addItem}) => {
+export const AddItems = React.memo<AddItemsPropsType>(({addItem}) =>{
+
     const [newTitleItem, setNewTitleItem] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -44,4 +45,4 @@ export const AddItems: FC<AddItemsPropsType> = ({addItem}) => {
             </IconButton>
         </div>
     )
-}
+})
