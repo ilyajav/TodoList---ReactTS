@@ -16,7 +16,7 @@ export type CommonResponseType<T = {}> = {
     data: T
 }
 
-export type TodoTpe = {
+export type TodoListsType = {
     id: string
     title: string
     addedDate: string
@@ -24,13 +24,12 @@ export type TodoTpe = {
 }
 
 
-
 export const todolistApi = {
        getTodos(){
-           return instance.get<Array<TodoTpe>>('todo-lists')
+           return instance.get<Array<TodoListsType>>('todo-lists')
        },
        createTodo(title: string){
-           return instance.post<CommonResponseType<TodoTpe>>('todo-lists', {
+           return instance.post<CommonResponseType<TodoListsType>>('todo-lists', {
                title,
            })
        },

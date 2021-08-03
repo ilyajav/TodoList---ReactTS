@@ -1,9 +1,9 @@
 import {combineReducers, createStore} from "redux";
 import {AppStateType} from "../state/store";
-import {v1} from "uuid";
 import {Provider} from "react-redux";
 import {tasksReducer} from "../state/tasks-reducer";
 import {todoListsReducer} from "../state/todolists-reducer";
+import {TaskPriorities, TaskStatuses} from "../api/task-api";
 
 const rootReducer = combineReducers({
     tasksData: tasksReducer,
@@ -12,17 +12,57 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     todoListsData: [
-        {id: "todoListID1", title: "What to learn", filter: "all"},
-        {id: "todoListID2", title: "What to buy", filter: "all"}
+        {id: "todoListID1", title: "What to learn",  addedDate: '', order: 0, filter: 'all'},
+        {id: "todoListID2", title: "What to buy",  addedDate: '', order: 0, filter: 'all'}
     ] ,
     tasksData: {
         ["todoListID1"]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
+            {  description: '',
+                title: 'task1',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Middle,
+                startDate: '',
+                deadline: '',
+                id: '1',
+                todoListId: 'todoListId1',
+                order: 0,
+                addedDate: '',},
+            {  description: '',
+                title: 'task2',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Middle,
+                startDate: '',
+                deadline: '',
+                id: '2',
+                todoListId: 'todoListId1',
+                order: 0,
+                addedDate: '',},
         ],
         ["todoListID2"]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true},
+            {  description: '',
+                title: 'task2',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Middle,
+                startDate: '',
+                deadline: '',
+                id: '2',
+                todoListId: 'todoListId2',
+                order: 0,
+                addedDate: '',},
+            {  description: '',
+                title: '',
+                completed: false,
+                status: TaskStatuses.New,
+                priority: TaskPriorities.Middle,
+                startDate: '',
+                deadline: '',
+                id: '2',
+                todoListId: 'todoListId1',
+                order: 0,
+                addedDate: '',}
         ]
     }
 };
