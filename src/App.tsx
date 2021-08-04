@@ -1,27 +1,37 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {AddItems} from "./AddItems";
 import {AppBar, Toolbar, IconButton, Button, Typography, Container, Grid, Paper} from "@material-ui/core";
 import {Menu} from '@material-ui/icons'
 import {useDispatch, useSelector} from "react-redux";
-import {addTasks, changeTaskStatus, changeTasksTitle, removeTasks} from "./state/tasks-reducer";
+import {
+    addTasks,
+    addTaskThunkCreator,
+    changeTaskStatus,
+    changeTasksTitle,
+    deleteTaskThunkCreator, updateTaskStatusThunkCreator
+} from "./state/tasks-reducer";
 import {AppStateType} from "./state/store";
 import {
     addTodoLists,
     changeTodoListsFilter,
-    changeTodoListsTitle,
+    changeTodoListsTitle, fetchTodoListThunkCreator,
     FilterCase,
     removeTodoLists, TodoListsDomainType
 } from "./state/todolists-reducer";
-import {TaskStatuses, TasksType} from "./api/task-api";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 
 export type TasksStateType = {
-    [key: string]: TasksType[]
+    [key: string]: TaskType[]
 }
 
 export const App = () => {
+
+    useEffect(() =>{
+        dispatch(fetchTodoListThunkCreator())
+    }, [])
 
     const todoListsData = useSelector<AppStateType, TodoListsDomainType[]>(state => state.todoListsData)
     const tasksData = useSelector<AppStateType, TasksStateType>(state => state.tasksData)
@@ -29,15 +39,15 @@ export const App = () => {
     const dispatch = useDispatch()
 
     const removeTask = useCallback((selectID: string, todoListID: string) => {
-        dispatch(removeTasks(selectID, todoListID))
+           dispatch(deleteTaskThunkCreator(selectID, todoListID))
     },[dispatch])
 
     const addTask = useCallback((title: string, todoListID: string) => {
-        dispatch(addTasks(title, todoListID))
+        dispatch(addTaskThunkCreator(title, todoListID))
     }, [dispatch])
 
-    const changeStatus = useCallback((id: string, isDoneStatus: TaskStatuses, todoListID: string) => {
-       dispatch(changeTaskStatus(id, todoListID, isDoneStatus))
+    const changeStatus = useCallback((id: string, status: TaskStatuses, todoListID: string) => {
+       dispatch(updateTaskStatusThunkCreator(todoListID, id, status))
     }, [dispatch])
 
     const tasksFilter = useCallback((value: FilterCase, todoListID: string) => {

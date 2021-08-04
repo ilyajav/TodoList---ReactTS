@@ -3,7 +3,7 @@ import {AppStateType} from "../state/store";
 import {Provider} from "react-redux";
 import {tasksReducer} from "../state/tasks-reducer";
 import {todoListsReducer} from "../state/todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../api/task-api";
+import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 const rootReducer = combineReducers({
     tasksData: tasksReducer,
@@ -19,7 +19,6 @@ const initialGlobalState = {
         ["todoListID1"]: [
             {  description: '',
                 title: 'task1',
-                completed: false,
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Middle,
                 startDate: '',
@@ -30,7 +29,6 @@ const initialGlobalState = {
                 addedDate: '',},
             {  description: '',
                 title: 'task2',
-                completed: false,
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Middle,
                 startDate: '',
@@ -43,7 +41,6 @@ const initialGlobalState = {
         ["todoListID2"]: [
             {  description: '',
                 title: 'task2',
-                completed: false,
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Middle,
                 startDate: '',
@@ -54,7 +51,6 @@ const initialGlobalState = {
                 addedDate: '',},
             {  description: '',
                 title: '',
-                completed: false,
                 status: TaskStatuses.New,
                 priority: TaskPriorities.Middle,
                 startDate: '',

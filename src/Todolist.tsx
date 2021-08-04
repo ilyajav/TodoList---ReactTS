@@ -1,15 +1,17 @@
-import React, {useCallback} from "react"
+import React, {useCallback, useEffect} from "react"
 import {AddItems} from "./AddItems";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task";
 import {FilterCase} from "./state/todolists-reducer";
-import {TaskStatuses, TasksType} from "./api/task-api";
+import {fetchTasksThunkCreator} from "./state/tasks-reducer";
+import {useDispatch} from "react-redux";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 type TodolistPropsType = {
     title: string;
-    tasks: TasksType[];
+    tasks: TaskType[];
     removeTasks: (selectID: string, todoListID: string) => void;
     tasksFilter: (value: FilterCase, todoListID: string) => void;
     addTask: (title: string, todoListID: string) => void;
@@ -23,6 +25,11 @@ type TodolistPropsType = {
 
 export const Todolist = React.memo<TodolistPropsType>(({title, tasks, removeTasks, tasksFilter, ...props}) => {
 
+    const dispatch = useDispatch()
+
+    useEffect(() =>{
+        dispatch(fetchTasksThunkCreator(props.id))
+    }, [])
 
     const onTasksAllFilter = useCallback(() => tasksFilter('all', props.id), [tasksFilter, props.id])
     const onTasksActiveFilter = useCallback(() => tasksFilter('active', props.id), [tasksFilter, props.id])
@@ -47,6 +54,7 @@ export const Todolist = React.memo<TodolistPropsType>(({title, tasks, removeTask
             <div>
 
                 {
+
                     tasks.map(task => <Task
                         removeTasks={removeTasks}
                         changeStatus={props.changeStatus}

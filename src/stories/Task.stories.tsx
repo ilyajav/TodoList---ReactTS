@@ -3,7 +3,7 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {Task} from "../Task";
 import {action} from "@storybook/addon-actions";
-import {TaskPriorities, TaskStatuses} from "../api/task-api";
+import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 export default {
     title: 'TODOLISTS/Task',
@@ -33,7 +33,6 @@ TaskIsDoneStories.args = {
           startDate: '',
           deadline: '',
           description: '',
-          completed: false,
           todoListId: 'todoListId1',
           addedDate: '',
       },
@@ -49,7 +48,6 @@ TaskIsNotDoneStories.args = {
         startDate: '',
         deadline: '',
         description: '',
-        completed: false,
         todoListId: 'todoListId1',
         addedDate: '',},
 };

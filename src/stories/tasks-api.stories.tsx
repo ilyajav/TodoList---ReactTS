@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import {taskApi} from "../api/task-api";
+import {TaskPriorities, TaskStatuses, todoListsAPI} from "../api/todolist-api";
 
 export default {
     title: 'API for Tasks'
 }
 
-const todoId = 'a9359218-3cb3-4a7e-b0c4-4ef72e54e62c'
+const todoId = '40dac9fa-e363-4ef8-8bd9-adff9a4a0ad8'
 
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
 
-        taskApi.getTasks(todoId)
+        todoListsAPI.getTasks(todoId)
             .then(res =>{
                 setState(res.data)
             })
@@ -20,12 +20,12 @@ export const GetTasks = () => {
 
     return <div> {JSON.stringify(state)}</div>
 }
-export const CreateTodolist = () => {
+export const CreateTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
 
 
-        taskApi.createTask(todoId, 'HTML')
+        todoListsAPI.createTask(todoId, 'TDD')
             .then(res =>{
                 console.log(res.data)
             })
@@ -34,13 +34,13 @@ export const CreateTodolist = () => {
 
     return <div> {JSON.stringify(state)}</div>
 }
-export const DeleteTodolist = () => {
+export const DeleteTasks = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
 
-        const taskId = 'a3619f26-c568-405c-a04b-c2d18fb8bee2'
+        const taskId = '350cdea2-74ee-4ea6-ba2c-daf0a881140a'
 
-        taskApi.deleteTask(todoId, taskId)
+        todoListsAPI.deleteTask(todoId, taskId)
             .then(res =>{
                 console.log(res.data)
             })
@@ -49,13 +49,20 @@ export const DeleteTodolist = () => {
 
     return <div> {JSON.stringify(state)}</div>
 }
-export const UpdateTodolistTitle = () => {
+export const UpdateTaskTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
 
-        const taskId = 'a3619f26-c568-405c-a04b-c2d18fb8bee2'
+        const taskId = 'a285ebcc-11b3-4c51-907b-6d4eef804e19'
 
-        taskApi.updateTask(todoId, taskId, 'CSS')
+        todoListsAPI.updateTask(todoId, taskId, {
+            title: 'Cheese',
+            deadline: '',
+            description: '',
+            startDate: '',
+            status: TaskStatuses.New,
+            priority: TaskPriorities.Middle,
+        })
             .then(res =>{
                 setState(res.data)
             })
