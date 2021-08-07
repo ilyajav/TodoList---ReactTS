@@ -61,6 +61,7 @@ export const addTodolistTC = (title: string) => {
         todolistsAPI.createTodolist(title)
             .then((res) => {
                 dispatch(setAppStatus('succeeded'))
+                dispatch(addTodolistAC(res.data.data.item))
             })
     }
 }

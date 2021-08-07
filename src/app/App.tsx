@@ -14,6 +14,7 @@ import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
+import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
             <Container fixed>
                 <TodolistsList/>
             </Container>
+            <ErrorSnackBar />
         </div>
     )
 }
