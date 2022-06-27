@@ -4,6 +4,8 @@ import {EditableSpan} from '../../../../components/EditableSpan/EditableSpan'
 import {Delete} from '@material-ui/icons'
 import {TaskStatuses, TaskType} from '../../../../api/todolists-api'
 
+// Пробелы между импортами
+
 type TaskPropsType = {
     task: TaskType
     todolistId: string
@@ -11,6 +13,8 @@ type TaskPropsType = {
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
 }
+
+// Вынести тип в отдельный файл и переименовать функции, ипользуя префикс on
 export const Task = React.memo((props: TaskPropsType) => {
     const onClickHandler = useCallback(() => props.removeTask(props.task.id, props.todolistId), [props.task.id, props.todolistId]);
 
@@ -22,6 +26,8 @@ export const Task = React.memo((props: TaskPropsType) => {
     const onTitleChangeHandler = useCallback((newValue: string) => {
         props.changeTaskTitle(props.task.id, newValue, props.todolistId)
     }, [props.task.id, props.todolistId]);
+
+    // Переименовать функции, ипользуя префикс handler
 
     return <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? 'is-done' : ''}>
         <Checkbox
@@ -35,4 +41,6 @@ export const Task = React.memo((props: TaskPropsType) => {
             <Delete/>
         </IconButton>
     </div>
+
+    // is-done в константу
 })

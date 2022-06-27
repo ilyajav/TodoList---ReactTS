@@ -10,6 +10,8 @@ import {useDispatch} from 'react-redux'
 import {fetchTasksTC} from '../tasks-reducer'
 import {RequestStatusType} from "../../../app/app-reducer";
 
+// Сделать пробелы между импортами
+
 type PropsType = {
     id: string
     title: string
@@ -24,6 +26,10 @@ type PropsType = {
     filter: FilterValuesType
     entityStatus: RequestStatusType
 }
+
+/* Переименовать тип в TodolistType или похоже, 
+вынести в отдельный файл с, например, 
+в Todolist.types.ts. Переименовать функции, используя handler префикс */
 
 export const Todolist = React.memo(function (props: PropsType) {
     console.log('Todolist called')
@@ -49,13 +55,16 @@ export const Todolist = React.memo(function (props: PropsType) {
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.id, props.changeFilter])
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.id, props.changeFilter])
 
+    // переименовать функции, используя handler префикс
 
     let tasksForTodolist = props.tasks
 
     if (props.filter === 'active') {
+        // вынести текст в константу
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
     }
     if (props.filter === 'completed') {
+         // вынести текст в константу
         tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
@@ -93,4 +102,4 @@ export const Todolist = React.memo(function (props: PropsType) {
     </div>
 })
 
-
+// Вынести текст в контсанты, убрать инлайновые стили

@@ -6,8 +6,11 @@ type EditableSpanPropsType = {
     onChange: (newValue: string) => void
 }
 
+// Вынести тип в EditableSpan.types.ts
+
 export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     console.log("EditableSpan called");
+    // Удалить console.log
     let [editMode, setEditMode] = useState(false);
     let [title, setTitle] = useState(props.value);
 
@@ -22,6 +25,8 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
+
+    // Переименовать функции, используя hanlder префикс
 
     return editMode
         ?    <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />

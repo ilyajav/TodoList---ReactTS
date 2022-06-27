@@ -3,13 +3,18 @@ import {Box, Button, FormControl, IconButton, TextField} from '@material-ui/core
 import {AddBox} from '@material-ui/icons';
 import {RequestStatusType} from "../../app/app-reducer";
 
+// Пробелы между импортами и удалить не нужные
+
 type AddItemFormPropsType = {
     addItem: (title: string) => void,
     entityStatus?: RequestStatusType
 }
 
+// Вынести тип в AddItemForm.types.ts, переименовать фукнции, используя on префикс
+
 export const AddItemForm = React.memo(function(props: AddItemFormPropsType) {
     console.log("AddItemForm called")
+    // Убрать console.log
 
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
@@ -20,6 +25,7 @@ export const AddItemForm = React.memo(function(props: AddItemFormPropsType) {
             setTitle("");
         } else {
             setError("Title is required");
+            // Вынести текст в контсанту
         }
     }
 
@@ -32,9 +38,12 @@ export const AddItemForm = React.memo(function(props: AddItemFormPropsType) {
             setError(null);
         }
         if (e.charCode === 13) {
+            // Заменить charCode на e.key === 'Enter'
             addItem();
         }
     }
+
+    // Переименовать функции в handler
 
     return <div>
         <TextField variant="outlined"
@@ -51,3 +60,5 @@ export const AddItemForm = React.memo(function(props: AddItemFormPropsType) {
         </IconButton>
     </div>
 })
+
+// Текст в контсанты

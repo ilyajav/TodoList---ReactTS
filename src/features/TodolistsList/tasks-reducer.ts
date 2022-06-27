@@ -23,6 +23,8 @@ import {
     handleServerNetworkError
 } from "../../utils/error-utils";
 
+ // Сделать пробелы между импортами
+
 const initialState: TasksStateType = {}
 
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionsType): TasksStateType => {
@@ -61,27 +63,33 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         default:
             return state
     }
+
+    // Вынести название кейсов в контсанты
 }
 
-// actions
 export const removeTaskAC = (taskId: string, todolistId: string) =>
     ({type: 'REMOVE-TASK', taskId, todolistId} as const)
+    // Вынести название типа в контсанту
 export const addTaskAC = (task: TaskType) =>
     ({type: 'ADD-TASK', task} as const)
+     // Вынести название типа в контсанту
 export const updateTaskAC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string) =>
     ({type: 'UPDATE-TASK', model, todolistId, taskId} as const)
+     // Вынести название типа в контсанту
 export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
     ({type: 'SET-TASKS', tasks, todolistId} as const)
+     // Вынести название типа в контсанту
 
-// thunks
 export const fetchTasksTC = (todolistId: string) => async (dispatch: Dispatch<ActionsType>) => {
     try {
         dispatch(setAppStatus('loading'))
+         // Вынести строку в контсанту
         const res = await todolistsAPI.getTasks(todolistId)
         const tasks = res.data.items
         const action = setTasksAC(tasks, todolistId)
         dispatch(action)
         dispatch(setAppStatus('succeeded'))
+        // Вынести строку в контсанту
     } catch (err) {
         handleServerNetworkError(dispatch, err.message)
     }
@@ -89,9 +97,11 @@ export const fetchTasksTC = (todolistId: string) => async (dispatch: Dispatch<Ac
 export const removeTaskTC = (taskId: string, todolistId: string) => async (dispatch: Dispatch<ActionsType>) => {
     try {
         dispatch(setAppStatus('loading'))
+        // Вынести строку в контсанту
         const res = await todolistsAPI.deleteTask(todolistId, taskId)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus('succeeded'))
+            // Вынести строку в контсанту
             dispatch(removeTaskAC(taskId, todolistId))
         }
     } catch (err) {
@@ -105,12 +115,16 @@ enum ResponseStatuses {
     captcha = 10
 }
 
+// удалить неиспользованный enum
+
 export const addTaskTC = (title: string, todolistId: string) => async (dispatch: Dispatch<ActionsType>) => {
     try {
         dispatch(setAppStatus('loading'))
+        // Вынести текст в контсанту
         const res = await todolistsAPI.createTask(todolistId, title)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatus('succeeded'))
+            // Вынести текст в контсанту
             dispatch(addTaskAC(res.data.data.item))
         } else {
             handleServerAppError<{ item: TaskType }>(dispatch, res.data)
@@ -122,11 +136,13 @@ export const addTaskTC = (title: string, todolistId: string) => async (dispatch:
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
     async (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
         dispatch(setAppStatus('loading'))
+        // Вынести текст в контсанту
         try {
             const state = getState()
             const task = state.tasks[todolistId].find(t => t.id === taskId)
             if (!task) {
                 console.warn('task not found in the state')
+                // Вынести текст в контсанту
                 return
             }
             const apiModel: UpdateTaskModelType = {
@@ -142,17 +158,19 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             if(res.data.resultCode === 0){
                 dispatch(updateTaskAC(taskId, domainModel, todolistId))
                 dispatch(setAppStatus('succeeded'))
+                // Вынести текст в контсанту
             }else {
                 dispatch(setAppError('Some error occurred'))
+                // Вынести текст в контсанту
             }
             dispatch(setAppStatus('failed'))
+            // Вынести текст в контсанту
 
         } catch (err) {
             handleServerNetworkError(dispatch, err.message)
         }
     }
 
-// types
 export type UpdateDomainTaskModelType = {
     title?: string
     description?: string

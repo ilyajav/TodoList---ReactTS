@@ -16,6 +16,8 @@ import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {ErrorSnackBar} from "../components/ErrorSnackBar/ErrorSnackBar";
 
+// Сделать пробелы между импортами для лучшей читаемости
+
 function App() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>
@@ -44,5 +46,7 @@ function App() {
         </div>
     )
 }
+
+// Вынести строки в константы
 
 export default App

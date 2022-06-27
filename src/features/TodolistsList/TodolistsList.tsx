@@ -16,6 +16,10 @@ import {Grid, Paper} from '@material-ui/core'
 import {AddItemForm} from '../../components/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 
+
+// Сделать пробелы между импортами для лучшей читаемости
+
+
 export const TodolistsList: React.FC = () => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
@@ -66,6 +70,7 @@ export const TodolistsList: React.FC = () => {
         dispatch(thunk)
     }, [dispatch])
 
+    // функции лучше переименовать, используя перфикс handler
 
     return <>
         <Grid container style={{padding: '20px'}}>
@@ -98,4 +103,6 @@ export const TodolistsList: React.FC = () => {
             }
         </Grid>
     </>
+
+    // Лучше не использовать инлайновые стили из-за высокого веса
 }

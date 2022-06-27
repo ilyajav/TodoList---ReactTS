@@ -17,6 +17,8 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
         default:
             return state
     }
+
+    // Вынести название кейсов в контстанты или enum
 }
 
 export const setAppStatus = (status: RequestStatusType) => {
@@ -26,6 +28,8 @@ export const setAppStatus = (status: RequestStatusType) => {
             status,
         },
     } as const
+
+    // Текст в контсанту
 }
 
 export const setAppError = (error: null | string) => {
@@ -35,6 +39,8 @@ export const setAppError = (error: null | string) => {
             error
         },
     } as const
+
+    // Текст в контсанту
 }
 
 export type SetAppError = ReturnType<typeof setAppError>
